@@ -1,0 +1,3 @@
+[submodule "paludis-gentoo-git-config"]
+	path = paludis-gentoo-git-config
+	url = git@github.com:hasufell/paludis-gentoo-git-config.git
