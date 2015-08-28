@@ -25,7 +25,11 @@ RUN ln -s /etc/init.d/net.eth0 /run/openrc/started/net.eth0
 RUN echo 'UTC' > /etc/timezone
 
 # set locale
+# eselect probably doesn't do much, we need to use ENV to persistently set this
 RUN eselect locale set en_US.utf8 && env-update && source /etc/profile
+ENV LANG en_US.utf8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.utf8
 
 # get latest portage tree
 RUN emerge-webrsync
