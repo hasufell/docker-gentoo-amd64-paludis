@@ -2,7 +2,7 @@ suffix=$3 # e.g. -hardened
 arch=$1
 busybox_version=$2
 dist="http://distfiles.gentoo.org/releases/${arch}/autobuilds/"
-stage3="$(wget -q -O- ${dist}/latest-stage3-${arch}${suffix}.txt | tail -n 1 | cut -f 1 -d ' ')"
+stage3="20150820/stage3-amd64-20150820.tar.bz2"
 
 mkdir newWorldOrder; cd newWorldOrder
 echo "Downloading and extracting ${stage3}..."
@@ -19,13 +19,8 @@ cd /
 #commit suicide
 /busybox rm -rf newWorldOrder /busybox /build.sh /linuxrc
 
-
-latest_stage3=$(curl "${base_url}/latest-stage3-amd64.txt" 2>/dev/null | grep -v '#' | awk '{print $1}')
-stage3=$(basename "${latest_stage3}")
-
-
 # Self destruct
 rm -f /Dockerfile /build.sh
 
-echo "Bootstrapped ${stage3} into /:"
+echo "Bootstrapped stage3-amd64-20150820 into /:"
 ls --color -lah

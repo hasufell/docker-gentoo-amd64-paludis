@@ -31,8 +31,10 @@ ENV LANG en_US.utf8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.utf8
 
-# get latest portage tree
-RUN emerge-webrsync
+# get the portage tree
+RUN wget http://distfiles.gentoo.org/snapshots/portage-20150820.tar.xz
+RUN tar xf portage-20150820.tar.xz -C /usr
+RUN rm portage-20150820.tar.xz
 
 # unmask latest paludis
 RUN echo "sys-apps/paludis ~amd64" >> /etc/portage/package.accept_keywords
@@ -43,16 +45,11 @@ RUN emerge sys-apps/paludis app-eselect/eselect-package-manager
 # select paludis as default package manager
 RUN eselect package-manager set paludis && . /etc/profile
 
-# install git for later git syncing
+# install git
 RUN emerge dev-vcs/git
 
 # copy base configuration
 COPY paludis-config /etc/paludis
-
-# copy hooks and gentoo repository configuration from a submodule
-# these set up a git based sync system for the gentoo repository
-COPY paludis-gentoo-git-config/etc/paludis/hooks /etc/paludis/hooks
-COPY paludis-gentoo-git-config/etc/paludis/repositories/gentoo.conf /etc/paludis/repositories/gentoo.conf
 
 # create necessary directories for paludis
 RUN mkdir -p /var/cache/paludis/names /var/cache/paludis/metadata /var/tmp/paludis
@@ -61,10 +58,7 @@ RUN mkdir -p /var/cache/paludis/names /var/cache/paludis/metadata /var/tmp/palud
 RUN chown paludisbuild:paludisbuild /var/tmp/paludis
 RUN chmod g+w /var/tmp/paludis
 
-# sync tree via paludis
-RUN rm -r /usr/portage
-RUN cd /usr && git clone --depth=1 https://github.com/gentoo/gentoo.git portage
-RUN chgrp paludisbuild /dev/tty && cave sync
+# create distdir
 RUN mkdir /usr/portage/distfiles
 
 # fix cache
