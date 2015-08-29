@@ -78,8 +78,6 @@ RUN chgrp paludisbuild /dev/tty && cave resolve -z eix -x
 RUN eix-update
 
 # update world
-# temporary fix for slotmove breakage
-RUN chgrp paludisbuild /dev/tty && cave resolve -1 sys-libs/ncurses app-crypt/pinentry sys-apps/openrc -x
 RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
 
 WORKDIR /usr/portage
