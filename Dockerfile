@@ -32,7 +32,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.utf8
 
 # get the portage tree
-RUN wget http://distfiles.gentoo.org/snapshots/portage-20150820.tar.xz
+RUN wget https://dev.gentoo.org/~hasufell/distfiles/portage-20150820.tar.xz
 RUN tar xf portage-20150820.tar.xz -C /usr
 RUN rm portage-20150820.tar.xz
 
