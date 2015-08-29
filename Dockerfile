@@ -45,9 +45,6 @@ RUN emerge sys-apps/paludis app-eselect/eselect-package-manager
 # select paludis as default package manager
 RUN eselect package-manager set paludis && . /etc/profile
 
-# install git
-RUN emerge dev-vcs/git
-
 # copy base configuration
 COPY paludis-config /etc/paludis
 
@@ -71,8 +68,8 @@ RUN chmod g+w -R /usr/portage/distfiles
 # update unmasked paludis in paludis config too
 RUN echo "sys-apps/paludis ~amd64" >> /etc/paludis/keywords.conf
 
-# install eix
-RUN chgrp paludisbuild /dev/tty && cave resolve -z eix -x
+# install a few tools on top of stage3
+RUN chgrp paludisbuild /dev/tty && cave resolve -z eix dev-vcs/git -x
 
 # update eix-cache
 RUN eix-update
