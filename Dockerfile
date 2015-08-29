@@ -58,15 +58,15 @@ RUN mkdir -p /var/cache/paludis/names /var/cache/paludis/metadata /var/tmp/palud
 RUN chown paludisbuild:paludisbuild /var/tmp/paludis
 RUN chmod g+w /var/tmp/paludis
 
-# create distdir
-RUN mkdir /usr/portage/distfiles
+# sync layman repo
+RUN chgrp paludisbuild /dev/tty && cave sync layman
 
 # fix cache
 RUN chgrp paludisbuild /dev/tty && cave fix-cache
 
 # fix permissions on distdir
-RUN chown paludisbuild:paludisbuild /usr/portage/distfiles
-RUN chmod g+w /usr/portage/distfiles
+RUN chown -R paludisbuild:paludisbuild /usr/portage/distfiles
+RUN chmod g+w -R /usr/portage/distfiles
 
 # update unmasked paludis in paludis config too
 RUN echo "sys-apps/paludis ~amd64" >> /etc/paludis/keywords.conf
