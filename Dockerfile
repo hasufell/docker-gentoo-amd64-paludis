@@ -76,6 +76,3 @@ RUN eix-update
 
 # update world
 RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
-
-WORKDIR /usr/portage
-
