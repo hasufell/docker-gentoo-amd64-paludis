@@ -76,3 +76,6 @@ RUN eix-update
 
 # update world
 RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
+
+# cleanup
+RUN rm -rf /usr/portage/distfiles/*
