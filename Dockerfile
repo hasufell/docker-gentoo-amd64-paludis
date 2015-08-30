@@ -88,5 +88,8 @@ RUN eix-update
 RUN chgrp paludisbuild /dev/tty && cave resolve -1 sys-libs/ncurses app-crypt/pinentry sys-apps/openrc -x
 RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
 
+# certificates sometimes have broken links in stage3, fix it
+RUN chgrp paludisbuild /dev/tty && cave resolve -z -1 app-misc/ca-certificates -x
+
 # cleanup
 RUN rm -rf /usr/portage/distfiles/*
