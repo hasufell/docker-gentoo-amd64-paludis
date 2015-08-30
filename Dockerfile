@@ -77,5 +77,8 @@ RUN eix-update
 # update world
 RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
 
+# certificates sometimes have broken links in stage3, fix it
+RUN chgrp paludisbuild /dev/tty && cave resolve -z -1 app-misc/ca-certificates -x
+
 # cleanup
 RUN rm -rf /usr/portage/distfiles/*
