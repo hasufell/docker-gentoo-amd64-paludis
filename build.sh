@@ -13,7 +13,7 @@ VerifyShaOfStage3()
 suffix=$3 # e.g. -hardened
 arch=$1
 dist="http://distfiles.gentoo.org/releases/${arch}/autobuilds/"
-stage3path="$(wget -q -O- ${dist}/latest-stage3-${arch}${suffix}.txt | tail -n 1 | cut -f 1 -d ' ')"
+stage3path="$(wget -O- ${dist}/latest-stage3-${arch}${suffix}.txt | tail -n 1 | cut -f 1 -d ' ')"
 stage3="$(basename ${stage3path})"
 
 # Create working directory, keep a copy of busybox handy
@@ -21,7 +21,7 @@ mkdir newWorldOrder; cd newWorldOrder
 cp /bin/busybox .
 
 echo "Downloading and extracting ${stage3path}..."
-wget -q -c "${dist}/${stage3path}" "${dist}/${stage3path}.DIGESTS"
+wget -c "${dist}/${stage3path}" "${dist}/${stage3path}.DIGESTS"
 if VerifyShaOfStage3 $stage3 "${stage3}.DIGESTS"; then
 	echo "DIGEST sum is okey";
 else
