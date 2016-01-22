@@ -54,8 +54,8 @@ COPY paludis-config /etc/paludis
 
 # copy hooks and gentoo repository configuration from a submodule
 # these set up a git based sync system for the gentoo repository
-COPY paludis-gentoo-git-config/etc/paludis/hooks /etc/paludis/hooks
-COPY paludis-gentoo-git-config/etc/paludis/repositories/gentoo.conf /etc/paludis/repositories/gentoo.conf
+COPY paludis-gentoo-git-config/hooks /etc/paludis/hooks
+COPY paludis-gentoo-git-config/repositories/gentoo.conf /etc/paludis/repositories/gentoo.conf
 
 # create necessary directories for paludis
 RUN mkdir -p /var/cache/paludis/names /var/cache/paludis/metadata /var/tmp/paludis
