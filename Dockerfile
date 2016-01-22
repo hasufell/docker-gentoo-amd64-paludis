@@ -39,13 +39,15 @@ RUN echo "sys-apps/paludis search-index xml" >> /etc/portage/package.accept_keyw
 RUN echo "sys-apps/paludis ~amd64" >> /etc/portage/package.accept_keywords
 
 # install paludis and eselect-package-manager
-RUN emerge sys-apps/paludis app-eselect/eselect-package-manager
+RUN emerge sys-apps/paludis app-eselect/eselect-package-manager && \
+	rm -rf /usr/portage/distfiles/*
 
 # select paludis as default package manager
 RUN eselect package-manager set paludis && . /etc/profile
 
 # install git for later git syncing
-RUN emerge dev-vcs/git
+RUN emerge dev-vcs/git && \
+	rm -rf /usr/portage/distfiles/*
 
 # copy base configuration
 COPY paludis-config /etc/paludis
@@ -79,16 +81,17 @@ RUN chmod g+w /usr/portage/distfiles
 RUN echo "sys-apps/paludis ~amd64" >> /etc/paludis/keywords.conf
 
 # install eix
-RUN chgrp paludisbuild /dev/tty && cave resolve -z eix -x
+RUN chgrp paludisbuild /dev/tty && cave resolve -z eix -x && \
+	rm -rf /usr/portage/distfiles/*
 
 # update eix-cache
 RUN eix-update
 
 # update world
-RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x
+RUN chgrp paludisbuild /dev/tty && cave resolve -c world -x && \
+	rm -rf /usr/portage/distfiles/*
 
 # certificates sometimes have broken links in stage3, fix it
-RUN chgrp paludisbuild /dev/tty && cave resolve -z -1 app-misc/ca-certificates -x
-
-# cleanup
-RUN rm -rf /usr/portage/distfiles/*
+RUN chgrp paludisbuild /dev/tty && \
+	cave resolve -z -1 app-misc/ca-certificates -x && \
+	rm -rf /usr/portage/distfiles/*
