@@ -31,23 +31,16 @@ ENV LANG en_US.utf8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.utf8
 
-# get latest portage tree
-RUN emerge-webrsync
-
 # unmask latest paludis
 RUN echo "sys-apps/paludis search-index xml" >> /etc/portage/package.accept_keywords
 RUN echo "sys-apps/paludis ~amd64" >> /etc/portage/package.accept_keywords
 
 # install paludis and eselect-package-manager
-RUN emerge sys-apps/paludis app-eselect/eselect-package-manager && \
-	rm -rf /usr/portage/distfiles/*
-
-# select paludis as default package manager
-RUN eselect package-manager set paludis && . /etc/profile
-
-# install git for later git syncing
-RUN emerge dev-vcs/git && \
-	rm -rf /usr/portage/distfiles/*
+RUN emerge-webrsync && \
+	emerge sys-apps/paludis app-eselect/eselect-package-manager && \
+	eselect package-manager set paludis && . /etc/profile && \
+	emerge dev-vcs/git && \
+	rm -r /usr/portage
 
 # copy base configuration
 COPY paludis-config /etc/paludis
@@ -65,8 +58,7 @@ RUN chown paludisbuild:paludisbuild /var/tmp/paludis
 RUN chmod g+w /var/tmp/paludis
 
 # sync tree via paludis
-RUN rm -r /usr/portage
-RUN cd /usr && git clone --depth=1 https://github.com/gentoo/gentoo.git portage
+RUN git -C /usr clone --depth=1 https://github.com/gentoo/gentoo.git portage
 RUN chgrp paludisbuild /dev/tty && cave sync
 RUN mkdir /usr/portage/distfiles
 
