@@ -32,7 +32,8 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.utf8
 
 # unmask latest paludis
-RUN echo "sys-apps/paludis search-index xml" >> /etc/portage/package.accept_keywords
+RUN echo "sys-apps/paludis search-index xml" >> \
+	/etc/portage/package.use/paludis.use
 RUN echo "sys-apps/paludis ~amd64" >> /etc/portage/package.accept_keywords
 
 # install paludis and eselect-package-manager
