@@ -1,5 +1,0 @@
-CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-O2 -pipe -Wall"
-CXXFLAGS="${CFLAGS}"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--hash-style=gnu"
-MAKEOPTS="${MAKEOPTS:--j$(nproc 2>/dev/null || echo '1')}"
