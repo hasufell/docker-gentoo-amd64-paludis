@@ -100,7 +100,7 @@ RUN chgrp paludisbuild /dev/tty && env-update && . /etc/profile && \
 
 # install toolchain first
 RUN chgrp paludisbuild /dev/tty && \
-	cave resolve -c toolchain -x && \
+	cave resolve -z toolchain -x && \
 	rm -rf /usr/portage/distfiles/* /srv/binhost/*
 
 # install everything
