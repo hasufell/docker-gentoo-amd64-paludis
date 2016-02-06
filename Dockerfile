@@ -100,7 +100,7 @@ RUN chgrp paludisbuild /dev/tty && env-update && . /etc/profile && \
 
 # install everything
 RUN chgrp paludisbuild /dev/tty && \
-	cave update-world --set toolchain && \
+	cave resolve -c toolchain -x -f && \
 	cave resolve -c world -x -f \
 		-D dev-libs/openssl -D virtual/udev -D sys-fs/udev \
 		-F sys-fs/eudev -U '*/*' \
