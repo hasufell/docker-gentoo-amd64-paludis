@@ -59,6 +59,9 @@ RUN git clone --depth=1 https://github.com/hasufell/gentoo-binhost.git \
 RUN git clone --depth=1 https://github.com/hasufell/gentoo-server-config.git \
 		/etc/paludis
 
+# allow non-binary packages
+RUN rm /etc/paludis/package_mask.conf.d/binhost.conf
+
 # rm etckeeper, we don't need it here
 RUN rm /etc/paludis/hooks/ebuild_postinst_post/etckeeper.bash \
 	/etc/paludis/hooks/ebuild_postrm_post/etckeeper.bash \
