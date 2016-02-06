@@ -98,9 +98,13 @@ RUN chgrp paludisbuild /dev/tty && env-update && . /etc/profile && \
 
 ##### PACKAGE INSTALLATION #####
 
-# install everything
+# install toolchain first
 RUN chgrp paludisbuild /dev/tty && \
 	cave resolve -c toolchain -x && \
+	rm -rf /usr/portage/distfiles/* /srv/binhost/*
+
+# install everything
+RUN chgrp paludisbuild /dev/tty && \
 	cave resolve -c world -x -f \
 		-D dev-libs/openssl -D virtual/udev -D sys-fs/udev \
 		-F sys-fs/eudev -U '*/*' \
