@@ -55,4 +55,5 @@ RUN chgrp paludisbuild /dev/tty && \
 
 A few things to note are also:
 * non-binary packages are not allowed, since /usr/include/ files are removed and compilation would probably fail hard (a complete rebuild via `cave resolve -e world -x` would be necessary after removing the `ebuild_preinst_pre/cleanup_files.bash` hook)
+* the same goes for Dockerfiles that do local compilations, they will have to run `cave resolve -e world -x` in order to restore all development files
 * a regular sync does not update the actual repositories, so we have a defined state (files in `/etc/paludis/repositories/*.conf` can be modified to allow that though)
