@@ -48,7 +48,7 @@ RUN chgrp paludisbuild /dev/tty && \
 	env-update && \
 	source /etc/profile && \
 	cave sync gentoo && \
-	cave resolve -z www-servers/nginx:0 && \
+	cave resolve <the-package-I-want> -x && \
 	rm -rf /var/cache/paludis/names/* /var/cache/paludis/metadata/* \
 		/var/tmp/paludis/* /usr/portage/* /srv/binhost/*
 ```
