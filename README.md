@@ -43,7 +43,8 @@ cave sync gentoo
 
 A complete Dockerfile command to install something could look like this:
 ```
-RUN git -C /usr/portage checkout -- . && \
+RUN chgrp paludisbuild /dev/tty && \
+	git -C /usr/portage checkout -- . && \
 	env-update && \
 	source /etc/profile && \
 	cave sync gentoo && \
