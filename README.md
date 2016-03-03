@@ -3,18 +3,18 @@
 This image is optimized for size, as such, stuff in the following
 directories is removed:
 ```
-/usr/portage/
 /srv/binhost/
 /usr/include/
-/usr/share/doc/
 /usr/lib64/debug/
-/usr/share/man/
+/usr/portage/
+/usr/share/applications/
+/usr/share/doc/
 /usr/share/gtk-doc/
 /usr/share/info/
+/usr/share/man/
 /usr/share/mime/
-/usr/share/applications/
-/var/cache/paludis/names/
 /var/cache/paludis/metadata/
+/var/cache/paludis/names/
 /var/tmp/paludis/
 ```
 
@@ -23,13 +23,13 @@ will remove files from the following directories from the package before
 it is merged:
 ```
 /usr/include/
-/usr/share/doc/
 /usr/lib64/debug/
-/usr/share/man/
+/usr/share/applications/
+/usr/share/doc/
 /usr/share/gtk-doc/
 /usr/share/info/
+/usr/share/man/
 /usr/share/mime/
-/usr/share/applications/
 ```
 
 When creating a derived image, you have to do the following before
