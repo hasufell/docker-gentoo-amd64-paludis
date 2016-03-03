@@ -47,7 +47,7 @@ RUN chgrp paludisbuild /dev/tty && \
 	git -C /usr/portage checkout -- . && \
 	env-update && \
 	source /etc/profile && \
-	cave sync gentoo && \
+	cave sync && \
 	cave resolve <the-package-I-want> -x && \
 	rm -rf /var/cache/paludis/names/* /var/cache/paludis/metadata/* \
 		/var/tmp/paludis/* /usr/portage/* /srv/binhost/*
