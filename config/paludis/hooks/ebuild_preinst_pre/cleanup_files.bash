@@ -15,5 +15,5 @@ files=(
 
 einfo "Removing ${files[@]}"
 
-rm -rf "${files[@]}"
+[[ ${#files[@]} -eq 0 ]] || rm -rf "${files[@]}"
 
