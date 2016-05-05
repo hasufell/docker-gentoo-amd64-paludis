@@ -91,12 +91,12 @@ cave sync
 chgrp paludisbuild /dev/tty
 eselect python set python2.7
 cave resolve -c world -x -f \
-	-D dev-libs/openssl -D virtual/udev -D sys-fs/udev \
+	-D dev-libs/openssl -D virtual/udev \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
 	--permit-old-version '*/*'
 cave resolve -c world -x \
-	-D dev-libs/openssl -D virtual/udev -D sys-fs/udev \
+	-D dev-libs/openssl -D virtual/udev \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
 	--permit-old-version '*/*'
