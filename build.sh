@@ -2,9 +2,6 @@
 
 set -e
 
-# Setup the rc_sys
-sed -e 's/#rc_sys=""/rc_sys="lxc"/g' -i /etc/rc.conf
-
 # By default, UTC system
 echo 'UTC' > /etc/timezone
 
@@ -25,6 +22,8 @@ locale-gen
 # unmask latest paludis
 echo "sys-apps/paludis pbins search-index xml" >> \
 	/etc/portage/package.use/paludis.use
+echo "app-text/xmlto -text" >> \
+	/etc/portage/package.use/paludis.use
 echo "sys-apps/paludis ~amd64" >> /etc/portage/package.accept_keywords
 
 # install paludis and eselect-package-manager
@@ -38,22 +37,12 @@ rm -r /usr/portage
 # clone repositories
 
 git -C /usr clone --depth=1 https://github.com/gentoo/gentoo.git portage
-git clone --depth=1 https://github.com/hasufell/gentoo-binhost.git \
-	/usr/gentoo-binhost
-git clone --depth=1 https://github.com/hasufell/libressl.git \
-	/var/db/paludis/repositories/libressl
-git clone --depth=1 https://github.com/MOSAIKSoftware/mosaik-overlay.git \
-	/var/db/paludis/repositories/mosaik-overlay
 
 # get paludis config
 git clone --depth=1 https://github.com/hasufell/gentoo-server-config.git \
 	/etc/paludis
 
-# allow non-binary packages temporarily
-mv /etc/paludis/package_mask.conf.d/binhost.conf \
-	/etc/paludis/package_mask.conf.d/binhost.conf.bak
 # rm etckeeper, we don't need it here
-
 rm /etc/paludis/hooks/ebuild_postinst_post/etckeeper.bash \
 	/etc/paludis/hooks/ebuild_postrm_post/etckeeper.bash \
 	/etc/paludis/hooks/ebuild_preinst_post/etckeeper.bash \
@@ -80,6 +69,7 @@ echo 'CAVE_RESUME_FILE_OPT="--resume-file /etc/paludis/tmp/cave_resume"' \
 echo 'CAVE_SEARCH_INDEX=/etc/paludis/tmp/cave-search-index' \
 	>> /etc/env.d/90cave
 
+
 # sync
 chgrp paludisbuild /dev/tty
 env-update
@@ -92,35 +82,22 @@ chgrp paludisbuild /dev/tty
 eselect python set python2.7
 cave resolve -c world -x -f \
 	-D dev-libs/openssl -D virtual/udev \
+	-D dev-lang/perl \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
 	--permit-old-version '*/*'
 cave resolve -c world -x \
 	-D dev-libs/openssl -D virtual/udev \
+	-D dev-lang/perl \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
 	--permit-old-version '*/*'
 cave purge -x
 cave fix-linkage -x
 
-# we only need one python
+# # we only need one python
 cave resolve -z -1 app-misc/ca-certificates \
 	\!dev-lang/python:3.4 --favour-matching dev-lang/python:2.7 -x
 
-# cleanup
-rm -rf /usr/portage/* /srv/binhost/* \
-	/usr/include/* /usr/share/doc/* /usr/lib64/debug/* \
-	/usr/share/man/* /usr/share/gtk-doc/* /usr/share/info/* \
-	/usr/share/mime/* /usr/share/applications/* \
-	/var/cache/paludis/names/* /var/cache/paludis/metadata/* \
-	/var/tmp/paludis/*
-find /usr/share/locale/ -mindepth 1 -maxdepth 1 -type d -exec rm -rf '{}' \;
-
 rm -rf /build.sh
-
-
-# don't allow non-binary packages, they probably won't build now after
-# removal of /usr/include
-mv /etc/paludis/package_mask.conf.d/binhost.conf.bak \
-	/etc/paludis/package_mask.conf.d/binhost.conf
 

@@ -15,6 +15,3 @@ RUN etc-update --automode -5
 # all images deriving from this one have the same state
 RUN sed -i -e 's|^sync|#sync|' /etc/paludis/repositories/*.conf
 
-# copy hooks
-COPY ./config/paludis /etc/paludis
-
