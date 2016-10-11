@@ -85,13 +85,15 @@ cave resolve -c world -x -f \
 	-D dev-lang/perl \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
-	--permit-old-version '*/*'
+	--permit-old-version '*/*' \
+	--without sys-devel/gcc
 cave resolve -c world -x \
 	-D dev-libs/openssl -D virtual/udev \
 	-D dev-lang/perl \
 	-D dev-lang/python \
 	-F sys-fs/eudev -U '*/*' \
-	--permit-old-version '*/*'
+	--permit-old-version '*/*' \
+	--without sys-devel/gcc
 cave purge -x
 cave fix-linkage -x
 
